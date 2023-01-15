@@ -1,0 +1,236 @@
+
+Yoana Zaharieva
+19:17 (12 minutes ago)
+to me
+
+#Author: Yoana
+#Date: January 17, 2023
+#This program consists of a driver's license practice test that will evaluate the user, and tell them how they scored on it.
+#Questions for each section
+TorFQuestions=["When passing a cyclist, you must leave at least 1 metre of space between your vehicle and the cyclist.", "You are allowed to lend someone your license in an emergency.", "When approaching a Merging Traffic sign, you should stop your vehicle and let the cars behind you go first", "Never change lanes in traffic without giving proper signal and looking to make sure the move can be made safely"]
+ABCDQuestions=["If you are involved in an accident in which someone is injured, you must:", "Under what circumstances may a driver's license be canceled?", "While driving, you receive a call on your hand-held cell phone. There are no passengers who can take the call for you. What should you do?", "If the signal light changes from green to yellow (amber) as you approach an intersection, what should you do?"]
+WriteQuestions=["If you are convicted of fleeing a police officer who signaled you to pull over, how many years will your license be suspended for?", "If you change your name or address, you must notify the Ministry of Transportation within how many days?", "What is the speed limit on highways, in km/h?(do not include km/h in your response)", "If a fully licensed driver accumulates 15 or more demerit points on his or her record, how many days will the driver's license be suspended for?"]
+
+#multiple choice possibilities
+aChoice = ["Call the Ministry of Transportation within 48 hours", "Not attending re- examination", "Pullover and park before using your cell phone", "Speed up to get past the yellow light before it turns red"]
+bChoice = ["Call the police immediately", "Possession of an altered driver's license","Answer the phone only if you ve been expecting an important call", "Continue through the intersection without stopping or slowly"]
+cChoice = ["Call the Ministry of Transportation immediately", "Unable to satisfactorily complete a re-examination", "Text back the caller to let them know you're driving", "Stop. If a stop cannot be made safely, proceed with caution"]
+dChoice = ["Call the police within 48 hours", "All of the above", "Answer the phone and promise to call the other person back later", " Sound your horn to warn pedestrians and other drivers that you do not intend to stop"]
+
+#Answers for each section
+TorFAnswers =["t", "f", "f", "t"]
+ABCDAnswers =["b", "d", "a", "c"]
+WriteAnswers =["5", "6", "110", "30"]
+
+#Variables
+QuestionCounter = 1
+counter= 0
+totalPoints = 0
+userAnswer = ""
+
+#Random Question Generation
+import random
+doneQuestionList=[]
+randomQuestion = random.randint(1,12)
+
+#Instructions for the user
+print("__________________________________________________________________________________________________________________________________________________________")
+print("This is a drivers license practice test with three types of questions: True or False, Multiple choice, and written response, all given randomly.")
+print("INSTRUCTIONS: \n\nTrue or false: answer with either 't' for true or 'f' for false, you get one try for these questions\nMultiple Choice: Answer with 'a','b','c', or 'd', depending on the answer, you have 4 tries, with 2 less points for every incorrect answer.\nWritten Response: type out the correct answer to the question, you have 5 tries, 2 less points for every incorrect answer.")
+print("\nWith each correct answer you will receive a certain amount of points, with after each incorrect answer, you will receive less points")
+print("For the true or false, or multiple choice questions, if the answer typed in is not an option, (t,f,a,b,c,d), it will not take away points, and let you redo the question")
+print("After each question, you will be told how many points you have added to your overall score, and how many points from your question you will be losing")
+print("__________________________________________________________________________________________________________________________________________________________")
+print("\nPOINTS: \n\n\tTrue or False - 3 points \n\tMultiple choice - 5 points \n\twritten response- 10 points\n\n Good Luck !!!")
+
+# asking the user if they want to coninue with the program
+answer = str(input("Do you want to continue with this test?(yes/no):"))
+#Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+answer = answer.casefold()
+answer = answer.strip()
+#Makes sure the user answered with one of the options given, rather than a typo
+while answer!= "yes" and answer!="no":
+    print("Invalid input. Try again by writing one of the options given")
+    answer = str(input("Do you want to continue with this test?(yes/no):"))
+#
+if answer == "no":
+    print("Goodbye!!")
+while len(doneQuestionList) <= 13 and answer == "yes":
+    randomQuestion = random.randint(1,12)
+    while randomQuestion in doneQuestionList:
+        randomQuestion = random.randint(1,12)
+        if randomQuestion in doneQuestionList:
+            randomQuestion = random.randint(1,12)
+    #print(randomQuestion)
+    if randomQuestion <= 4:
+        TorFCounter = randomQuestion -1
+        #the amount of points the user will recieve for a correct answer
+        pointsGained = 3
+        print("\nQuestion",QuestionCounter ,"(t/f):",TorFQuestions[TorFCounter])
+        userAnswer = str(input("Answer:"))
+        #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+        userAnswer = userAnswer.casefold()
+        userAnswer = userAnswer.strip()
+        #evaluating if they are correct, and if they will recieve points
+       
+        complete = False
+        while complete == False:
+            if userAnswer == TorFAnswers[TorFCounter]:
+                print("Correct Answer")
+                print("+ 3 points")
+                totalPoints = totalPoints + 3
+                complete = True
+            elif userAnswer != 't' and userAnswer != 'f':
+                print("Invalid input. Try again by writing one of the options given")
+                userAnswer = str(input("Answer:"))
+                #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+                userAnswer = userAnswer.casefold()
+                userAnswer = userAnswer.strip()
+            else:
+                print("Incorrect answer")
+                print("+0 points")
+                complete = True
+
+       
+               
+        doneQuestionList.insert(0, randomQuestion)
+        QuestionCounter = QuestionCounter +1
+       
+   
+    #Multiple choice questions
+    if randomQuestion > 4  and randomQuestion <= 8:
+        ABCDCounter = randomQuestion
+        #Instructions for multiple choice
+        #The amount of points they will recieve for each question
+        pointsGained = 5
+
+        ABCDCounter = (randomQuestion-1)%4
+        ABCDQuetsion = (randomQuestion-1)%4
+       
+        #instructions for the multiple choice questions
+        print("\nQuestion", QuestionCounter, "(Multiple choice):", ABCDQuestions[ABCDCounter])
+        print("\n a)",aChoice[ABCDCounter],"\n b)",bChoice[ABCDCounter],"\n c)",cChoice[ABCDCounter], "\n d)",dChoice[ABCDCounter])
+         
+        #Evaluating the answer and the amount of points that the user will recieve
+        userAnswer = str(input("Answer:"))
+        #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+        userAnswer = userAnswer.casefold()
+        userAnswer = userAnswer.strip()
+
+        #Evuluates if it is wrong on the first one to calculate the amount of points the user will recieve after
+        complete = False
+        while complete == False:
+            if userAnswer!= ABCDAnswers[ABCDCounter]:
+                counter = 0
+                while userAnswer!= ABCDAnswers[ABCDCounter] and counter<2 and pointsGained!=0:
+                    if userAnswer != "a" and userAnswer != "b" and userAnswer != "c" and userAnswer != "d":
+                        print("Invalid input. Try again by writing one of the options given")
+                    else:
+                        if pointsGained>=2:
+                            #Will give the user 2 less points for each time after the first they will need to get the correct answer
+                            print("-2 points")
+                            print("Incorrect Answer")
+                            pointsGained = pointsGained - 2
+                        else:
+                            pointsGained = 0
+                        counter = counter+1
+                    userAnswer = str(input("Answer:"))
+                    #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+                    userAnswer = userAnswer.casefold()
+                    userAnswer = userAnswer.strip()
+
+                if userAnswer== ABCDAnswers[ABCDCounter]:
+                    print("Correct Answer")
+                    print("+", pointsGained,"points")
+                    totalPoints = totalPoints + pointsGained
+                    complete = True
+                else:
+                    print("Incorrect Answer")
+                    print("+0 points")
+               
+            else:  
+                print("Correct Answer")
+                print("+", pointsGained,"points")
+            totalPoints = totalPoints + pointsGained
+            complete = True
+        QuestionCounter = QuestionCounter +1
+        doneQuestionList.insert(0, randomQuestion)
+           
+            #Adding to the index to go to and evaluate the next questions  
+       
+       
+
+   
+    if randomQuestion > 8  and randomQuestion <= 12:
+        WriteCounter = randomQuestion
+        #Instructions for multiple choice
+        #The amount of points they will recieve for each question
+        pointsGained = 10
+
+        WriteCounter = (randomQuestion-1)%4
+        WriteQuetsion = (randomQuestion-1)%4
+       
+        #instructions for the multiple choice questions
+        print("\nQuestion", QuestionCounter, "(Written Answer):", WriteQuestions[WriteCounter])
+         
+        #Evaluating the answer and the amount of points that the user will recieve
+        userAnswer = str(input("Answer:"))
+        #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+        userAnswer = userAnswer.casefold()
+        userAnswer = userAnswer.strip()
+
+        #Evuluates if it is wrong on the first one to calculate the amount of points the user will recieve after
+        if userAnswer!= WriteAnswers[WriteCounter]:
+            counter= 0
+            while userAnswer!= WriteAnswers[WriteCounter] and counter<10 and pointsGained!=0:
+                if pointsGained>=2:
+                    #Will give the user 2 less points for each time after the first they will need to get the correct answer
+                    print("-2 points")
+                    pointsGained = pointsGained - 2
+                else:
+                    pointsGained = 0
+                counter = counter+1
+                userAnswer = str(input("Answer:"))
+                #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+                userAnswer = userAnswer.casefold()
+                userAnswer = userAnswer.strip()
+            if userAnswer== WriteAnswers[WriteCounter]:
+                print("Correct Answer")
+                print("+", pointsGained,"points")
+                totalPoints = totalPoints + pointsGained
+            else:
+                print("Incorrect Answer")
+                print("+0 points")
+        else:  
+            print("Correct Answer")
+            print("+", pointsGained,"points")
+            totalPoints = totalPoints + pointsGained
+        QuestionCounter = QuestionCounter +1
+        doneQuestionList.insert(0, randomQuestion)
+    if QuestionCounter == 13:
+
+        #finds the percentage from their score
+        percent = (totalPoints/72)*100
+        #Find the amount of points they got out of 72 and total percentage of the quiz that they completed correctly
+        print("Total Points: ", totalPoints,"/72, Total Perentage: %.2f" %(percent), "%")
+
+        #Notes to tell them how to improve, and their possibility of passing the test
+        if totalPoints>60:
+            print("You are doing very well, you will definitely pass your examination!")
+        elif totalPoints>48:
+            print("Try working on remembering the rules, and you might pass")
+        elif totalPoints>36:
+            print("You need to study a more")
+        else:
+            print("You failed. If you want to pass the examination, you need to read the rulebook.")
+        doneQuestionList= []
+        QuestionCounter = 1
+        totalPoints = 0
+        counter= 0
+        answer = str(input("Do you want to retake this test?(yes/no):"))
+        #Will make their answer is lowercase and eliminate all extra spaces to make sure no excess points are taken away for that.
+        answer = answer.casefold()
+        answer = answer.strip()
+        while answer!= "yes" and answer!="no":
+            print("Invalid input. Try again by writing one of the options given")
+            answer = str(input("Do you want to continue with this test?(yes/no):"))
